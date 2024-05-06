@@ -1,0 +1,26 @@
+version: '3'
+services:
+  postgres:
+    image: docker.io/postgres:14-alpine
+    environment:
+      POSTGRES_USER: rbaskets
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: baskets
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  request-baskets:
+    image: ghcr.io/vincentbockaert/request-baskets:latest
+    environment:
+      PORT: 8080
+      THEME: "adaptive"
+      LISTENER: 0.0.0.0
+      # mem, bolt, sql, default = mem
+      DB-TYPE: "sql"
+      CONN: "postgres://rbaskets:pwd@postgres/baskets?sslmode=disable"
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres-data:
