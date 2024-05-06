@@ -69,7 +69,7 @@ func CreateConfig() *ServerConfig {
 	pflag.Int("maxsize", maxBasketCapacity, "Maximum allowed basket size (max capacity)")
 	pflag.Int("page", defaultPageSize, "Default page size")
 	pflag.String("token", "", "Master token, random token is generated if not provided")
-	pflag.String("db", defaultDatabaseType, fmt.Sprintf(
+	pflag.String("db-type", defaultDatabaseType, fmt.Sprintf(
 		"Baskets storage type: \"%s\" - in-memory, \"%s\" - Bolt DB, \"%s\" - SQL database",
 		DbTypeMemory, DbTypeBolt, DbTypeSQL))
 	pflag.String("file", "./baskets.db", "Database location, only applicable for file or SQL databases")
@@ -121,7 +121,7 @@ func CreateConfig() *ServerConfig {
 		MaxCapacity:  viper.GetInt("maxsize"),
 		PageSize:     viper.GetInt("page"),
 		MasterToken:  token,
-		DbType:       viper.GetString("db"),
+		DbType:       viper.GetString("db-type"),
 		DbFile:       viper.GetString("file"),
 		DbConnection: viper.GetString("conn"),
 		Baskets:      viper.GetStringSlice("basket"),
