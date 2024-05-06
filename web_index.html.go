@@ -23,7 +23,7 @@ var (
   <script>
   (function($) {
     function randomName() {
-      var name = Math.random().toString(36).substring(2, 9);
+      let name = self.crypto.randomUUID();
       $("#basket_name").val(name);
     }
 
