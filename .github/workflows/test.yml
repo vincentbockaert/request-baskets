@@ -41,10 +41,10 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - uses: actions/setup-go@v1
+      - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: go test -v -coverprofile=profile.cov
 
       - name: Send coverage
