@@ -1,4 +1,3 @@
-version: '3'
 services:
   postgres:
     image: docker.io/postgres:14-alpine
@@ -10,6 +9,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   request-baskets:
     image: ghcr.io/vincentbockaert/request-baskets:latest
     environment:
@@ -21,6 +25,11 @@ services:
       CONN: "postgres://rbaskets:pwd@postgres/baskets?sslmode=disable"
     ports:
       - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - db
 
 volumes:
   postgres-data:
